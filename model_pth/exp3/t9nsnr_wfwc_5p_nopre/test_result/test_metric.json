@@ -1,0 +1,44 @@
+{
+ "top1_acc": 0.1,
+ "top5_acc": 0.5,
+ "Class Wise Precision": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.1,
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "Class Wise Recall": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  1.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "Class Wise F1-score": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.182,
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "Overall Precision": 0.01,
+ "Overall Recall": 0.1,
+ "Overall F1-score": 0.01818181818181818,
+ "mean_class_accuracy": 0.1
+}

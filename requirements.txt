@@ -1,0 +1,19 @@
+decord>=0.6.0
+matplotlib
+# mmcv-full==1.5.0
+moviepy
+numpy==1.23.0 # 只有这个版本的numpy匹配
+opencv-contrib-python
+opencv-python
+pymemcache
+scipy
+# torch>=1.5
+tqdm
+regex
+ftfy
+pandas
+tensorboardX
+fvcore
+
+scikit-learn
+einops

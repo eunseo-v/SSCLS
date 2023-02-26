@@ -1,0 +1,44 @@
+conda create -n sscls python=3.8
+conda install pytorch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1 cudatoolkit=11.3 -c pytorch -c conda-forge
+pip install openmim
+mim install mmcv-full==1.5.0
+mim install mmdet
+mim install mmpose
+pip install -r requirements.txt
+pip install -e .
+
+更改了pyskl.models.head.simple_head.py中SimpleHead中self.pool相关
+太极拳源数据taichi_mod.npy
+
+chmod 777 ***.sh
+
+太极拳热力图数据: 
+    https://drive.google.com/file/d/1w4trelnmqZe5F0D_aCpia-FqJ3kDMHWD/view?usp=sharing
+    bash order/gen_tc.sh
+ncrc热力图数据:
+    https://ieee-dataport.org/competitions/nurse-care-activity-recognition-challenge
+    python project_utils/ncrc_npy.py 
+    python project_utils/gen_ncrc_set.py
+
+预训练模型: bash order/ntu120.sh
+    1. 5part_kp
+    2. 5part_lb
+    3. 17part_kp
+    4. 10part_kplb
+
+太极拳的实验：
+exp0: 搜寻最优的init_lr 
+    bash order/exp0.sh
+exp1: 数据预处理的影响
+    bash order/exp1.sh
+exp2: 骨架分割策略的有效性
+    bash order/exp2.sh
+exp3: 预训练策略的有效性
+    bash order/exp3.sh
+exp4: 多模态late fusion的结果以及所有配置条件的结果
+    bash order/exp4.sh
+exp5: 搜寻init_lr和预训练的作用
+    bash order/exp5.sh
+exp6: 多配置环境下稳定结果
+    bash order/exp6.sh
+exp7: 在ncrc数据集上的识别结果
