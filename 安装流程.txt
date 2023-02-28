@@ -42,3 +42,6 @@ exp5: 搜寻init_lr和预训练的作用
 exp6: 多配置环境下稳定结果
     bash order/exp6.sh
 exp7: 在ncrc数据集上的识别结果
+    bash order/exp7.sh 
+exp8: finetune条件下，多配置识别结果
+    bash order/exp8.sh

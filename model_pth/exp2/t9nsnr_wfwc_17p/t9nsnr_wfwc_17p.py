@@ -2,7 +2,7 @@ model = dict(
     type='Recognizer3D',
     backbone=dict(
         type='ResNet3dSlowOnly',
-        in_channels=5,
+        in_channels=17,
         base_channels=32,
         num_stages=3,
         out_indices=(2, ),
@@ -17,7 +17,7 @@ model = dict(
         type='I3DHead', in_channels=512, num_classes=10, dropout=0.5),
     test_cfg=dict(average_clips='prob'))
 dataset_type = 'PoseDataset'
-ann_file = 'data/ds_taichi/test7nsnr.pkl'
+ann_file = 'data/ds_taichi/test9nsnr.pkl'
 left_kp = [
     5, 6, 7, 8, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
     60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71
@@ -44,7 +44,7 @@ train_pipeline = [
             1, 2, 3, 4, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
             30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43
         ]),
-    dict(type='GenerateTaiChiPoseTarget', with_kp=True, with_limb=False),
+    dict(type='GenerateTaiChi17PoseTarget', with_kp=True, with_limb=False),
     dict(type='FormatShape', input_format='NCTHW_Heatmap'),
     dict(type='Collect', keys=['imgs', 'label'], meta_keys=[]),
     dict(type='ToTensor', keys=['imgs', 'label'])
@@ -54,7 +54,7 @@ val_pipeline = [
     dict(type='PoseDecode'),
     dict(type='PoseCompact', hw_ratio=1.0, allow_imgpad=True),
     dict(type='Resize', scale=(64, 64), keep_ratio=False),
-    dict(type='GenerateTaiChiPoseTarget', with_kp=True, with_limb=False),
+    dict(type='GenerateTaiChi17PoseTarget', with_kp=True, with_limb=False),
     dict(type='FormatShape', input_format='NCTHW_Heatmap'),
     dict(type='Collect', keys=['imgs', 'label'], meta_keys=[]),
     dict(type='ToTensor', keys=['imgs'])
@@ -65,7 +65,7 @@ test_pipeline = [
     dict(type='PoseCompact', hw_ratio=1.0, allow_imgpad=True),
     dict(type='Resize', scale=(64, 64), keep_ratio=False),
     dict(
-        type='GenerateTaiChiPoseTarget',
+        type='GenerateTaiChi17PoseTarget',
         with_kp=True,
         with_limb=False,
         double=True),
@@ -82,7 +82,7 @@ data = dict(
         times=30,
         dataset=dict(
             type='PoseDataset',
-            ann_file='data/ds_taichi/test7nsnr.pkl',
+            ann_file='data/ds_taichi/test9nsnr.pkl',
             split='train',
             pipeline=[
                 dict(type='UniformSampleFrames', clip_len=48),
@@ -105,7 +105,7 @@ data = dict(
                         41, 42, 43
                     ]),
                 dict(
-                    type='GenerateTaiChiPoseTarget',
+                    type='GenerateTaiChi17PoseTarget',
                     with_kp=True,
                     with_limb=False),
                 dict(type='FormatShape', input_format='NCTHW_Heatmap'),
@@ -114,7 +114,7 @@ data = dict(
             ])),
     val=dict(
         type='PoseDataset',
-        ann_file='data/ds_taichi/test7nsnr.pkl',
+        ann_file='data/ds_taichi/test9nsnr.pkl',
         split='test',
         pipeline=[
             dict(type='UniformSampleFrames', clip_len=48, num_clips=1),
@@ -122,7 +122,8 @@ data = dict(
             dict(type='PoseCompact', hw_ratio=1.0, allow_imgpad=True),
             dict(type='Resize', scale=(64, 64), keep_ratio=False),
             dict(
-                type='GenerateTaiChiPoseTarget', with_kp=True,
+                type='GenerateTaiChi17PoseTarget',
+                with_kp=True,
                 with_limb=False),
             dict(type='FormatShape', input_format='NCTHW_Heatmap'),
             dict(type='Collect', keys=['imgs', 'label'], meta_keys=[]),
@@ -130,7 +131,7 @@ data = dict(
         ]),
     test=dict(
         type='PoseDataset',
-        ann_file='data/ds_taichi/test7nsnr.pkl',
+        ann_file='data/ds_taichi/test9nsnr.pkl',
         split='test',
         pipeline=[
             dict(type='UniformSampleFrames', clip_len=48, num_clips=10),
@@ -138,7 +139,7 @@ data = dict(
             dict(type='PoseCompact', hw_ratio=1.0, allow_imgpad=True),
             dict(type='Resize', scale=(64, 64), keep_ratio=False),
             dict(
-                type='GenerateTaiChiPoseTarget',
+                type='GenerateTaiChi17PoseTarget',
                 with_kp=True,
                 with_limb=False,
                 double=True),
@@ -146,7 +147,7 @@ data = dict(
             dict(type='Collect', keys=['imgs', 'label'], meta_keys=[]),
             dict(type='ToTensor', keys=['imgs'])
         ]))
-optimizer = dict(type='SGD', lr=0.1, momentum=0.9, weight_decay=0.0003)
+optimizer = dict(type='SGD', lr=0.4, momentum=0.9, weight_decay=0.0003)
 optimizer_config = dict(grad_clip=dict(max_norm=40, norm_type=2))
 lr_config = dict(policy='CosineAnnealing', by_epoch=False, min_lr=0)
 total_epochs = 24
@@ -156,15 +157,15 @@ evaluation = dict(
 log_config = dict(interval=20, hooks=[dict(type='TextLoggerHook')])
 log_level = 'INFO'
 output_config = dict(
-    out='./model_pth/exp0/t7nsnr_5p_lrd1/test_result/results.pkl')
+    out='./model_pth/exp2/t9nsnr_wfwc_17p/test_result/results.pkl')
 eval_config = dict(
-    metric_out='./model_pth/exp0/t7nsnr_5p_lrd1/test_result',
+    metric_out='./model_pth/exp2/t9nsnr_wfwc_17p/test_result',
     eval=[
         'top_k_accuracy', 'mean_class_accuracy', 'confusion_matrix',
         't_sne_vis'
     ])
-work_dir = './model_pth/exp0/t7nsnr_5p_lrd1'
-load_from = './model_pth/ntu120xsub_5parts_kp/best_top1_acc_epoch_23.pth'
+work_dir = './model_pth/exp2/t9nsnr_wfwc_17p'
+load_from = './model_pth/ntu120xsub_17parts_kp/best_top1_acc_epoch_23.pth'
 find_unused_parameters = True
 dist_params = dict(backend='nccl')
 gpu_ids = range(0, 4)
